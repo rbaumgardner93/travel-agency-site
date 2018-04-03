@@ -1,5 +1,16 @@
+/* 
+Key Terms:
+gul.src() 
+gulp.dest()
+pipe
+ */
+
 const gulp = require('gulp');
 const watch = require('gulp-watch');
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
+const cssvars = require('postcss-simple-vars');
+const nested = require('postcss-nested');
 
 gulp.task('default', function() {
   console.log('Hooray - you created a Gulp task.');
@@ -10,7 +21,9 @@ gulp.task('html', function() {
 })
 
 gulp.task('styles', function() {
-  console.log('Imagine Sass or PostCSS styles happening here.');
+  return gulp.src('./app/assets/styles/styles.css')
+    .pipe(postcss([cssvars, nested, autoprefixer]))
+    .pipe(gulp.dest('./app/temp/styles'));
 })
 
 gulp.task('watch', function() {
